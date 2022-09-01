@@ -1,13 +1,50 @@
-const { posts, comments, users } = require("../models")
+const { posts } = require("../models")
 
+// 1. 게시글을 등록합니다.
 async function posting (req, res) {
+    const { userName } = res.locals;
     const { postTitle, postContent } = req.body;
 
-    const savePosting = await posts.create({
-        postTitle, postContent
-    })
+    const posting = await posts.create({ postTitle, postContent, userName })
 
-    res.status(201).send("게시글이 저장되었습니다!")
+    res.status(201).send({ posting })
 }
 
-module.exports = { posting };
+
+// 2. 게시글을 수정합니다.
+async function putPost (req, res) {
+    const { postId } = req.params;
+    const { postTitle, postContent } = req.body;
+
+    const updatePost = await posts.update({
+        postTitle: postTitle,
+        postContent: postContent,
+    }, {
+        where: { postId: postId }
+    });
+
+    res.send({ updatePost });
+}
+
+
+// 3. 게시글을 삭제합니다.
+async function deletePost (req, res) {
+    const { postId } = req.params;
+
+    await posts.destroy({ where: { postId: postId } })
+
+    res.send({ msg: "게시글이 삭제되었습니다." })
+}
+
+// 4-1. 게시글 목록을 가져옵니다.
+async function getPost (req, res) {
+    const getPostList = await posts.findAll({})
+
+    res.send({ getPostList });
+}
+
+// 4-2. 게시글 검색 기능 구현
+
+
+
+module.exports = { posting, putPost, deletePost, getPost };

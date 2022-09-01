@@ -1,11 +1,12 @@
-const express = require("express")
+const express = require("express");
 const mysql = require("mysql");
 const reqlogMiddleware = require("./middlewares/request-log-middleware");
-const postRouter = require("./router/postRouter")
-const userRouter = require("./router/userRouter")
+const postRouter = require("./router/postRouter");
+const userRouter = require("./router/userRouter");
+const commentRouter = require("./router/commentRouter");
 const port = 8000;
 
-//MySql
+//MySQL
 const db = require("./models");
 db.sequelize
   .sync()
@@ -16,23 +17,24 @@ db.sequelize
     console.error(error);
   });
 
-// server application
+// Server application
 const app = express()
 
-// body parser
+// Body parser
 app.use(express.json());
 
-// router
+// Router
 app.get('/', (req, res) => {
   res.status(200).render("index");
 })
 app.use("/posts", postRouter)
 app.use("/users", userRouter)
+app.use("/users", commentRouter)
 
-// middleware
+// Middleware
 app.use(reqlogMiddleware);
 
-// port
+// Port
 const server = app.listen(port, () => {
     console.log(port,"번 포트에서 대기 중");
 });
