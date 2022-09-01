@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       // comments.belongsTo(models.users, { foreignKey: "userName", sourceKey: "commentId", onDelete: "CASCADE" });
-      // comments.belongsTo(models.posts, { foreignKey: "postId", sourceKey: "commentId", onDelete: "CASCADE" });
+      comments.belongsTo(models.posts, { foreignKey: "postId", sourceKey: "commentId", onDelete: "CASCADE" });
     }
   }
   comments.init({
@@ -22,6 +22,8 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
+    userId: DataTypes.INTEGER,
+    postId : DataTypes.INTEGER,
     commentContent: DataTypes.STRING,
   }, {
     sequelize,

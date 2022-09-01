@@ -6,9 +6,23 @@ async function postComments (req, res) {
     const { userId, userName } = res.locals;
     const { commentContent } = req.body;
 
-    const saveComment = await comments.create({ userId, postId, commentContent });
+    const saveComment = await comments.create({ 
+        userId: userId, 
+        postId: postId, 
+        commentContent: commentContent
+    });
 
     res.status(201).send({ saveComment });
 }
 
-module.exports = { postComments };
+
+// 6. 댓글을 삭제합니다.
+async function deleteComments (req, res) {
+    const { commentId } = req.params;
+
+    await comments.destroy({ where: { commentId } });
+
+    res.send({ msg: "댓글이 삭제되었습니다." });
+}
+
+module.exports = { postComments, deleteComments };

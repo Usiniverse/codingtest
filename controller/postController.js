@@ -1,4 +1,4 @@
-const { posts } = require("../models")
+const { posts, comments } = require("../models");
 
 // 1. 게시글을 등록합니다.
 async function posting (req, res) {
@@ -46,5 +46,31 @@ async function getPost (req, res) {
 // 4-2. 게시글 검색 기능 구현
 
 
+// 7. 게시글 상세 페이지를 가져옵니다.
+async function detailPost (req, res) {
+    const { postId } = req.params;
+    
+    const getDetailPost = await posts.findOne({
+        where: { postId },
+        include: [
+            {
+                model: comments,
+                attributes: [ "userId", "commentContent" ],
+            }
+        ]
+    })
 
-module.exports = { posting, putPost, deletePost, getPost };
+    const check = await comments.findOne({
+        where: { postId: postId }
+    })
+
+    res.send({ getDetailPost, check });
+}
+
+module.exports = { 
+    posting, 
+    putPost, 
+    deletePost, 
+    getPost, 
+    detailPost 
+};

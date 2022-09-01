@@ -27,9 +27,8 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.status(200).render("index");
 })
-app.use("/posts", postRouter)
+app.use("/posts", postRouter, commentRouter)
 app.use("/users", userRouter)
-app.use("/users", commentRouter)
 
 // Middleware
 app.use(reqlogMiddleware);
