@@ -1,7 +1,8 @@
 const express = require("express")
 const mysql = require("mysql");
 const reqlogMiddleware = require("./middlewares/request-log-middleware");
-const imageRouter = require("./router/imageRouter")
+const postRouter = require("./router/postRouter")
+const userRouter = require("./router/userRouter")
 const port = 8000;
 
 //MySql
@@ -23,9 +24,10 @@ app.use(express.json());
 
 // router
 app.get('/', (req, res) => {
-  res.status(200).render('index');
+  res.status(200).render("index");
 })
-app.use("/images", imageRouter);
+app.use("/posts", postRouter)
+app.use("/users", userRouter)
 
 // middleware
 app.use(reqlogMiddleware);
