@@ -11,15 +11,21 @@ async function signUp (req, res) {
 }
 
 async function signIn (req, res) {
+    const { userName, password } = req.body;
+
     const loginUser = await users.findOne({
         where: { userName }
     });
 
-    res.send({
-        user: {
-            userName: loginUser.userName
-        }
-    });
+    if (userName !== loginUser.userName) {
+        return res.status(400),send({ errorMessage: "아이디가 일치하지 않습니다." })
+    }
+
+    if (password !== loginUser.password) {
+        return res.status(400),send({ errorMessage: "비밀번호가 일치하지 않습니다." })
+    }
+
+    res.send({ msg: "로그인" });
 }
 
 module.exports = { signUp, signIn }

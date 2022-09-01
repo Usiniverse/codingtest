@@ -6,9 +6,6 @@ async function posting (req, res) {
     const savePosting = await posts.create({
         postTitle, postContent
     })
-    // const saveUser = await users.create({
-    //     userName
-    // });
 
     res.status(201).send("게시글이 저장되었습니다!")
 }
