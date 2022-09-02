@@ -26,3 +26,7 @@ async function deleteComments (req, res) {
 }
 
 module.exports = { postComments, deleteComments };
+
+
+// 대댓 DB 새로 파기
+// recommentId, commentId, recommentContent

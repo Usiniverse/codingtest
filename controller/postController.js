@@ -55,16 +55,13 @@ async function detailPost (req, res) {
         include: [
             {
                 model: comments,
+                required: false,
                 attributes: [ "userId", "commentContent" ],
             }
         ]
-    })
+    });
 
-    const check = await comments.findOne({
-        where: { postId: postId }
-    })
-
-    res.send({ getDetailPost, check });
+    res.send({ getDetailPost });
 }
 
 module.exports = { 
