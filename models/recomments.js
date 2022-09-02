@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      recomments.belongsTo(models.comments, { foreignKey: "commentId", sourceKey: "recommentId", onDelete: "CASCADE" });
     }
   }
   recomments.init({
@@ -20,6 +21,8 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
+    userId: DataTypes.INTEGER,
+    postId: DataTypes.INTEGER,
     commentId: DataTypes.INTEGER,
     recommentContent: DataTypes.STRING,
   }, {

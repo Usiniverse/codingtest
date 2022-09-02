@@ -1,11 +1,11 @@
-const { posts, comments } = require("../models");
+const { posts, comments, recomments } = require("../models");
 
 // 1. 게시글을 등록합니다.
 async function posting (req, res) {
-    const { userName } = res.locals;
+    const { userId } = res.locals;
     const { postTitle, postContent } = req.body;
 
-    const posting = await posts.create({ postTitle, postContent, userName })
+    const posting = await posts.create({ postTitle, postContent, userId })
 
     res.status(201).send({ posting })
 }
@@ -56,7 +56,14 @@ async function detailPost (req, res) {
             {
                 model: comments,
                 required: false,
-                attributes: [ "userId", "commentContent" ],
+                attributes: [ "userId", "commentId", "commentContent" ],
+                include: [
+                    {
+                        model: recomments,
+                        required: false,
+                        attributes: [ "userId", "commentId", "recommentContent" ]
+                    }
+                ]
             }
         ]
     });
