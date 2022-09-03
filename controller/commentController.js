@@ -33,7 +33,7 @@ async function recomment (req, res) {
 
     const recomment = await recomments.create({
         userId, postId, commentId, recommentContent
-    })
+    });
 
     res.status(201).send({ recomment });
 }

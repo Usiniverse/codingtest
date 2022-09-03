@@ -68,6 +68,12 @@ async function detailPost (req, res) {
         ]
     });
 
+    
+
+    // for (let i = 0; i < getDetailPost.comment.length; i++) {
+
+    // }
+
     res.send({ getDetailPost });
 }
 
