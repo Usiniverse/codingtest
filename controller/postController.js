@@ -49,8 +49,8 @@ async function getPost (req, res) {
 // 7. 게시글 상세 페이지를 가져옵니다.
 async function detailPost (req, res) {
     const { postId } = req.params;
-    
-    const getDetailPost = await posts.findOne({
+
+    const getDetailPost = await posts.findAll({
         where: { postId },
         order: [[ "createdAt", "DESC" ]],
         include: [
@@ -66,7 +66,14 @@ async function detailPost (req, res) {
         ]
     });
 
-    res.send({ getDetailPost });
+    const reply = await comments.findAll({
+        where: { postId },
+        include: [{
+            model: recomments
+        }]
+    })
+
+    res.send({ getDetailPost, reply });
 }
 
 module.exports = { 
