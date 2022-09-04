@@ -50,29 +50,23 @@ async function getPost (req, res) {
 async function detailPost (req, res) {
     const { postId } = req.params;
     
-    const getDetailPost = await posts.findOne({
+    const getDetailPost = await posts.findAll({
         where: { postId },
         include: [
             {
                 model: comments,
-                required: false,
+                required: true,
                 attributes: [ "userId", "commentId", "commentContent" ],
                 include: [
                     {
                         model: recomments,
-                        required: false,
-                        attributes: [ "userId", "commentId", "recommentContent" ]
+                        required: true,
+                        attributes: [ "userId", "recommentId", "commentId", "recommentContent" ]
                     }
                 ]
             }
         ]
     });
-
-    
-
-    // for (let i = 0; i < getDetailPost.comment.length; i++) {
-
-    // }
 
     res.send({ getDetailPost });
 }
