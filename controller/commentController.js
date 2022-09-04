@@ -20,6 +20,17 @@ async function postComments (req, res) {
 async function deleteComments (req, res) {
     const { commentId } = req.params;
 
+    const findRecomment = await recomments.findAll({
+        where: { commentId }
+    });
+    console.log(findRecomment);
+
+    if (findRecomment) {
+        await recomments.destroy({
+            where: { commentId }
+        });
+    };
+
     await comments.destroy({ where: { commentId } });
 
     res.send({ msg: "댓글이 삭제되었습니다." });

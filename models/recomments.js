@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       recomments.belongsTo(models.comments, { foreignKey: "commentId", sourceKey: "recommentId", onDelete: "CASCADE" });
-      recomments.belongsTo(models.posts, { foreignKey: "postId", sourceKey: "recommentId", onDelete: "CASCADE" });
+      // recomments.belongsTo(models.posts, { foreignKey: "postId", sourceKey: "recommentId", onDelete: "CASCADE" });
     }
   }
   recomments.init({
