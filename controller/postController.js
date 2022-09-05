@@ -55,7 +55,7 @@ async function detailPost (req, res) {
     const { postId } = req.params;
 
     const getDetailPost = await posts.findAll({
-        where: { postId: postId },
+        where: { postId },
         order: [[ "createdAt", "DESC" ]],
         include: [
             {
@@ -64,11 +64,13 @@ async function detailPost (req, res) {
                 order: [[ "createdAt", "DESC" ]],
                 include: [{
                     model: recomments,
+                    required: false,
                     order: [[ "createdAt", "DESC" ]],
                 }]
             },
         ]
     });
+    console.log(getDetailPost);
 
     res.send({ getDetailPost });
 }
