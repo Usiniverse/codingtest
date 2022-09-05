@@ -31,7 +31,9 @@ async function putPost (req, res) {
 async function deletePost (req, res) {
     const { postId } = req.params;
 
-    await posts.destroy({ where: { postId: postId } })
+    await recomments.destroy({ where: { postId: postId } });
+    await comments.destroy({ where: { postId: postId } });
+    await posts.destroy({ where: { postId: postId } });
 
     res.send({ msg: "게시글이 삭제되었습니다." })
 }
@@ -66,14 +68,7 @@ async function detailPost (req, res) {
         ]
     });
 
-    const reply = await comments.findAll({
-        where: { postId },
-        include: [{
-            model: recomments
-        }]
-    })
-
-    res.send({ getDetailPost, reply });
+    res.send({ getDetailPost });
 }
 
 module.exports = { 
