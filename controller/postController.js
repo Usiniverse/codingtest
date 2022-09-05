@@ -40,7 +40,9 @@ async function deletePost (req, res) {
 
 // 4-1. 게시글 목록을 가져옵니다.
 async function getPost (req, res) {
-    const getPostList = await posts.findAll({})
+    const getPostList = await posts.findAll({
+        order: [[ "createdAt", "DESC" ]],
+    })
 
     res.send({ getPostList });
 }
@@ -53,7 +55,7 @@ async function detailPost (req, res) {
     const { postId } = req.params;
 
     const getDetailPost = await posts.findAll({
-        where: { postId },
+        where: { postId: postId },
         order: [[ "createdAt", "DESC" ]],
         include: [
             {
