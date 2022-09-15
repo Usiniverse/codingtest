@@ -54,7 +54,7 @@ async function getPost (req, res) {
 async function detailPost (req, res) {
     const { postId } = req.params;
 
-    const getDetailPost = await posts.findAll({
+    const getDetailPost = await posts.findOne({
         where: { postId },
         order: [[ "createdAt", "DESC" ]],
         include: [
