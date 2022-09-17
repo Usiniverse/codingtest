@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const reqlogMiddleware = require("./middlewares/request-log-middleware");
 const connectDB = require('./db/db');
-const path = require('path');
 const postRouter = require("./router/postRouter");
 const userRouter = require("./router/userRouter");
 // const commentRouter = require("./router/commentRouter");
