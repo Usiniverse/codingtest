@@ -3,7 +3,7 @@ const postController = require("../controller/postController");
 const router = express.Router();
 
 // post upload
-router.post("/", postController.posting);
+router.post("/post", postController.posting);
 
 router.get("/", postController.getPost);
 
