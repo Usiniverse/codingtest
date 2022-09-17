@@ -1,19 +1,25 @@
 const user = require("../models/users")
 
 async function signUp (req, res) {
-    const { userId, nickname, password } = req.body;
+    const { nickname, password } = req.body;
 
-    await user.create({ userId, nickname, password });
+    const findUser = await user.findOne({ nickname });
+
+    if (findUser.nickname === nickname) {
+        return res.status(400).send({ errorMessage: "이미 가입한 회원입니다." })
+    }
+
+    await user.create({ nickname, password });
 
     res.status(201).send("회원가입 되었습니다!")
 }
 
 async function signIn (req, res) {
-    const { userId, password } = req.body;
+    const { nickname, password } = req.body;
 
-    const loginUser = await user.findById( userId );
+    const loginUser = await user.findOne({ nickname });
 
-    if (userId !== loginUser.userId) {
+    if (nickname !== loginUser.nickname) {
         return res.status(400),send({ errorMessage: "아이디가 일치하지 않습니다." })
     }
 
