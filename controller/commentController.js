@@ -1,47 +1,47 @@
-const { comments, recomments } = require("../models");
+// const { comments, recomments } = require("../models");
 
-// 5. 댓글을 등록합니다.
-async function postComments (req, res) {
-    const { postId } = req.params;
-    const { userId, userName } = res.locals;
-    const { commentContent } = req.body;
+// // 5. 댓글을 등록합니다.
+// async function postComments (req, res) {
+//     const { postId } = req.params;
+//     const { userId, userName } = res.locals;
+//     const { commentContent } = req.body;
 
-    const saveComment = await comments.create({ 
-        userId: userId, 
-        postId: postId, 
-        commentContent: commentContent
-    });
+//     const saveComment = await comments.create({ 
+//         userId: userId, 
+//         postId: postId, 
+//         commentContent: commentContent
+//     });
 
-    res.status(201).send({ saveComment });
-}
+//     res.status(201).send({ saveComment });
+// }
 
 
-// 6. 댓글을 삭제합니다.
-async function deleteComments (req, res) {
-    const { commentId } = req.params;
+// // 6. 댓글을 삭제합니다.
+// async function deleteComments (req, res) {
+//     const { commentId } = req.params;
     
-    await recomments.destroy({
-        where: { commentId: commentId }
-    });
+//     await recomments.destroy({
+//         where: { commentId: commentId }
+//     });
 
-    await comments.destroy({ 
-        where: { commentId: commentId } 
-    });
+//     await comments.destroy({ 
+//         where: { commentId: commentId } 
+//     });
 
-    res.send({ msg: "댓글이 삭제되었습니다." });
-}
+//     res.send({ msg: "댓글이 삭제되었습니다." });
+// }
 
-// 7-1. 대댓글 작성하기
-async function recomment (req, res) {
-    const { userId } = res.locals;
-    const { commentId } = req.params;
-    const { recommentContent } = req.body;
+// // 7-1. 대댓글 작성하기
+// async function recomment (req, res) {
+//     const { userId } = res.locals;
+//     const { commentId } = req.params;
+//     const { recommentContent } = req.body;
 
-    const recomment = await recomments.create({
-        userId, postId, commentId, recommentContent
-    });
+//     const recomment = await recomments.create({
+//         userId, postId, commentId, recommentContent
+//     });
 
-    res.status(201).send({ recomment });
-}
+//     res.status(201).send({ recomment });
+// }
 
-module.exports = { postComments, deleteComments, recomment };
+// module.exports = { postComments, deleteComments, recomment };

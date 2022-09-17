@@ -1,21 +1,19 @@
 const express = require("express");
-const mysql = require("mysql");
+const mongoose = require("mongoose");
 const reqlogMiddleware = require("./middlewares/request-log-middleware");
-const postRouter = require("./router/postRouter");
-const userRouter = require("./router/userRouter");
-const commentRouter = require("./router/commentRouter");
+const connectDB = require('./db/db');
+const path = require('path');
+// const postRouter = require("./router/postRouter");
+// const userRouter = require("./router/userRouter");
+// const commentRouter = require("./router/commentRouter");
 const port = 8000;
 
-//MySQL
-const db = require("./models");
-db.sequelize
-  .sync()
-  .then(() => {
-     console.log("MySQL DB 연결 성공");
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+// ============================
+// DB 연결 - log
+connectDB();
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
 
 // Server application
 const app = express()
@@ -25,10 +23,10 @@ app.use(express.json());
 
 // Router
 app.get('/', (req, res) => {
-  res.status(200).render("index");
+  res.send("ㅎㅇ");
 })
-app.use("/posts", postRouter, commentRouter)
-app.use("/users", userRouter)
+// app.use("/posts", postRouter, commentRouter)
+// app.use("/users", userRouter)
 
 // Middleware
 app.use(reqlogMiddleware);
