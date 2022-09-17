@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const reqlogMiddleware = require("./middlewares/request-log-middleware");
 const connectDB = require('./db/db');
 const path = require('path');
-// const postRouter = require("./router/postRouter");
-// const userRouter = require("./router/userRouter");
+const postRouter = require("./router/postRouter");
+const userRouter = require("./router/userRouter");
 // const commentRouter = require("./router/commentRouter");
 const port = 8000;
 
@@ -23,10 +23,10 @@ app.use(express.json());
 
 // Router
 app.get('/', (req, res) => {
-  res.send("ㅎㅇ");
+  res.send("Hello World");
 })
-// app.use("/posts", postRouter, commentRouter)
-// app.use("/users", userRouter)
+app.use("/posts", postRouter)
+app.use("/users", userRouter)
 
 // Middleware
 app.use(reqlogMiddleware);

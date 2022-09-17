@@ -1,23 +1,19 @@
-const { users } = require("../models")
+const user = require("../models/users")
 
 async function signUp (req, res) {
-    const { userName, password } = req.body;
+    const { userId, nickname, password } = req.body;
 
-    const newUser = await users.create({
-        userName, password
-    });
+    await user.create({ userId, nickname, password });
 
     res.status(201).send("회원가입 되었습니다!")
 }
 
 async function signIn (req, res) {
-    const { userName, password } = req.body;
+    const { userId, password } = req.body;
 
-    const loginUser = await users.findOne({
-        where: { userName }
-    });
+    const loginUser = await user.findById( userId );
 
-    if (userName !== loginUser.userName) {
+    if (userId !== loginUser.userId) {
         return res.status(400),send({ errorMessage: "아이디가 일치하지 않습니다." })
     }
 
