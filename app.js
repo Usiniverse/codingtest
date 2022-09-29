@@ -7,6 +7,11 @@ const userRouter = require("./router/userRouter");
 // const commentRouter = require("./router/commentRouter");
 const port = 8000;
 
+const corsOption = {
+  origin: ["*",],
+  credentials: true,
+};
+
 // ============================
 // DB 연결 - log
 connectDB();
@@ -29,6 +34,7 @@ app.use("/users", userRouter)
 
 // Middleware
 app.use(reqlogMiddleware);
+app.use(cors(corsOption));
 
 // Port
 const server = app.listen(port, () => {
